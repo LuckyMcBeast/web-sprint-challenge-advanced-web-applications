@@ -4,7 +4,9 @@ import BubblePage from "./BubblePage";
 import {ColorList as mockColorList} from './ColorList'
 
 jest.mock('./ColorList')
-
+const mockColors = {data = [
+ 
+]}
 
 test("Renders BubblePage without errors", async () => {
   // Finish this test
@@ -15,5 +17,5 @@ test("Fetches data and renders the bubbles on mounting", async () => {
 });
 
 //Task List
-//1. Setup test for basic rendering of component
-//2. Setup test for initial rendering of bubbles on loading
+//1. Setup test for basic rendering of component Failed
+//2. Setup test for initial rendering of bubbles on loading Failed
