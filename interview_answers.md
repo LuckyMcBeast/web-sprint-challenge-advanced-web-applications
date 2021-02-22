@@ -9,7 +9,7 @@ Tokens are used for secure authentication. For example, when a user logs into a 
 Requiring authentication to enter sensative areas of the app through private routes and by utilizing tokens after login.
 
 3. Describe how web servers work.
-
+Web servers host data that can be retrieved by clients.
 
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
