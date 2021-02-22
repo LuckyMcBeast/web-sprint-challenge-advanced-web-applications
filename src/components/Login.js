@@ -1,37 +1,98 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+const initialData = {
+  username: '',
+  password: ''
+}
 
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
+  const [data, setData] = useState(initialData);
+  const [error, setError] = useState(false);
+const history = useHistory();
 
-  useEffect(()=>{
+
+  useEffect(() => {
     axios
       .delete(`http://localhost:5000/api/colors/1`, {
-        headers:{
+        headers: {
           'authorization': "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98"
         }
       })
-      .then(res=>{
+      .then(res => {
         axios.get(`http://localhost:5000/api/colors`, {
-          headers:{
+          headers: {
             'authorization': ""
           }
         })
-        .then(res=> {
-          console.log(res);
-        });
+          .then(res => {
+            console.log(res);
+          });
         console.log(res);
       })
   });
 
+  function loginAttempt(e) {
+    e.preventDefault();
+    axios.post('http://localhost:5000/api/login', data)
+    .then(res => {
+      setError(false);
+      console.log(res.data.payload);
+      localStorage.setItem('token', res.data.payload);
+      history.push('/bubblepage');
+    })
+    .catch(error => {
+      console.log(error);
+      setError(true);
+    })
+    setData(initialData);
+  }
+
+  const onInputChange = e => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value
+    })
+  };
+
+  const formSubmit = e => {
+    e.preventDefault();
+    loginAttempt(e);
+  }
+
+
   return (
-    <>
-      <h1>
-        Welcome to the Bubble App!
-        <p>Build a login page here</p>
-      </h1>
-    </>
+    <div className="form" >
+      <h1>Welcome to the Bubble App!</h1>
+      <form className="login-form" onSubmit={formSubmit}>
+      <label htmlFor="username"> Username </label>
+        <section>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            placeholder="Username / Email"
+            onChange={onInputChange}
+          />
+        </section>
+        
+        <label htmlFor="password"> Password </label>
+        <section>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={onInputChange}
+          />
+        </section>
+        <button className="loginButton" type='submit'>Login</button>
+        {error ? <p className="error">Username or Password not valid.</p> : <p></p>}
+      </form>
+    </div>
   );
 };
 
