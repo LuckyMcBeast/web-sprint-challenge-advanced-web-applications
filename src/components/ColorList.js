@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import EditMenu from "./EditMenu"
 import axiosWithAuth from "../helpers/axiosWithAuth";
 
@@ -16,14 +15,13 @@ const ColorList = ({ colors, updateColors }) => {
     setEditing(true);
     setColorToEdit(color);
   };
-
   const getAndUpdateColors = () => {
     axiosWithAuth().get('/colors')
-        .then(res => {
-          updateColors(res.data)
-        })
-        .catch(error => console.log(error))
-      }
+      .then(res => {
+        updateColors(res.data)
+      })
+      .catch(error => console.log(error))
+  }
 
   const saveEdit = e => {
     e.preventDefault();
@@ -46,11 +44,11 @@ const ColorList = ({ colors, updateColors }) => {
           <li key={color.color} onClick={() => editColor(color)}>
             <span>
               <span className="delete" onClick={e => {
-                    e.stopPropagation();
-                    deleteColor(color)
-                  }
-                }>
-                  x
+                e.stopPropagation();
+                deleteColor(color)
+              }
+              }>
+                x
               </span>{" "}
               {color.color}
             </span>
@@ -61,7 +59,7 @@ const ColorList = ({ colors, updateColors }) => {
           </li>
         ))}
       </ul>
-      { editing && <EditMenu colorToEdit={colorToEdit} saveEdit={saveEdit} setColorToEdit={setColorToEdit} setEditing={setEditing}/> }
+      { editing && <EditMenu colorToEdit={colorToEdit} saveEdit={saveEdit} setColorToEdit={setColorToEdit} setEditing={setEditing} />}
 
     </div>
   );
